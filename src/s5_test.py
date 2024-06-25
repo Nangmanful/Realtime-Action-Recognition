@@ -277,6 +277,12 @@ def draw_result_img(img_disp, ith_img, humans, dict_id2skeleton,
             skeleton[1::2] = skeleton[1::2] / scale_h
             # print("Drawing skeleton: ", dict_id2skeleton[id], "with label:", label, ".")
             lib_plot.draw_action_result(img_disp, id, skeleton, label)
+                        # 특정 관절의 좌표를 영상에 표시 
+            wrist_index = 9
+            x = int(skeleton[2 * wrist_index] * img_disp.shape[1])
+            y = int(skeleton[2 * wrist_index + 1] * img_disp.shape[0])
+            cv2.putText(img_disp, f"Wrist: ({x}, {y})", (x, y),
+                        fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.5, color=(255, 0, 0), thickness=2)
 
     # Add blank to the left for displaying prediction scores of each class
     img_disp = lib_plot.add_white_region_to_left_of_image(img_disp)
